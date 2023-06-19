@@ -3,6 +3,9 @@
 
 I COULD DO GITHUB ACTIONS ON THIS PROJECT!!!! I FORGOT WHAT WAY IT WAS, I'LL LOOKS THROUGH MY NOTES AND UPDATE THIS
 
+I think I can use github actions to upload the data to azure, use dvc for it maybe
+Right, I think github actions can be used to do dvc which then uploads data to azure blob storage, that actually sounds pretty good
+
 Tests will depend on country and culture, to see tests that my group did for US patients follow this link: https://github.com/ataul-ui/novo-early-alzhimers 
 
 This repository contains the backend code for an early Alzheimer's detection system. The system is designed to analyze various data sources, such as ocular data, speech data, and stress data, to detect early signs of Alzheimer's disease in individuals.
