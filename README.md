@@ -1,6 +1,10 @@
 # backend-early-alzheimers
 
 
+I COULD DO GITHUB ACTIONS ON THIS PROJECT!!!! I FORGOT WHAT WAY IT WAS, I'LL LOOKS THROUGH MY NOTES AND UPDATE THIS
+
+
+
 This repository contains the backend code for an early Alzheimer's detection system. The system is designed to analyze various data sources, such as ocular data, speech data, and stress data, to detect early signs of Alzheimer's disease in individuals.
 
 Features
