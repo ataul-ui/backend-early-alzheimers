@@ -6,11 +6,11 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 # Define database credentials
-host = 'host.docker.internal'
-port = '5432'
-dbname = 'alzhimers'
-user = 'airflow'
-password = 'airflow'
+host = host
+port = port
+dbname = dbname
+user = user
+password = password
 
 def create_regular_schema():
     # Create a connection to the database
