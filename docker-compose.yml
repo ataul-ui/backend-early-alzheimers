@@ -6,7 +6,7 @@ services:
     image: postgres:9.6
     environment:
       - POSTGRES_USER=airflow
-      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_PASSWORD=POSTGRE_PASSWORD
       - POSTGRES_DB=airflow
     volumes:
       - postgres_data:/var/lib/postgresql/data
