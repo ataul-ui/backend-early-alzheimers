@@ -1,5 +1,6 @@
 from airflow import DAG
 from datetime import datetime, timedelta 
+from dotenv import load_dotenv
 from airflow.operators.python_operator import PythonOperator
 import openai
 

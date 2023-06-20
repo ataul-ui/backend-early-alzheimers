@@ -2,6 +2,7 @@ from airflow import DAG
 import json
 import os
 import psycopg2
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
 
