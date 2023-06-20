@@ -2,7 +2,7 @@
 
 testing something again
 blah baassl
-
+uhh what?
 I COULD DO GITHUB ACTIONS ON THIS PROJECT!!!! I FORGOT WHAT WAY IT WAS, I'LL LOOKS THROUGH MY NOTES AND UPDATE THIS
 
 I think I can use github actions to upload the data to azure, use dvc for it maybe
