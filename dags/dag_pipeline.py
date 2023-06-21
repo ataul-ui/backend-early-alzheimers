@@ -8,11 +8,13 @@ from airflow.operators.python_operator import PythonOperator
 
 #LET THERE ONLY BE ONE DAG FI.E, AND IT SHOULD BE THIS ONE
 #COMBINE IT WITH SPEECH_DAY.py
+load_dotenv()
+var1 = os.getenv("dbname")
 
 # Define database credentials
 host = 'host.docker.internal'
 port = '5432'
-dbname = 'airflow'
+dbname = var1
 user = 'airflow'
 password = 'airflow'
     
