@@ -34,9 +34,9 @@ def score_data(**kwargs):
         return rest
 
 
-def upload_to_postgre():
+def upload_to_postgre_eye_data():
     cwd = os.getcwd()
-    file_path = os.path.join(cwd, "dags", "data", "example.json")
+    file_path = os.path.join(cwd, "dags", "data", "ocular.json")
     
     with open(file_path, "r") as json_file:
         json_data = json.load(json_file)
@@ -77,7 +77,7 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
     
     database_upload = PythonOperator(
         task_id='database_upload',
-        python_callable=upload_to_postgre
+        python_callable=upload_to_postgre_eye_data
     )
     
     load_file >> scored_result >> database_upload
