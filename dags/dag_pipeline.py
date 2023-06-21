@@ -15,23 +15,6 @@ port = '5432'
 dbname = 'airflow'
 user = 'airflow'
 password = 'airflow'
-
-
-def transcribe_file(**kwargs):
-    context = kwargs
-    context['ti'].xcom_push(key='mykey', value='ocular data has been received')
-    return "ocular data has been received"
-
-
-def score_data(**kwargs):
-    ti = kwargs['ti']
-    transcribed = ti.xcom_pull(key='mykey')
-    print(transcribed)
-    rest = ti.xcom_pull(task_ids=['load_file'])
-    if not rest:
-        raise Exception('No data.')
-    else:
-        return rest
     
 def upload_to_postgre_speech_data(**kwargs):
     cwd = os.getcwd()
@@ -98,20 +81,6 @@ def confirm_data_upload(**kwargs):
 
 with DAG("eye_pipeline", start_date=datetime(2021,1,1),
          schedule_interval='@daily', catchup=False) as dag:
-    
-    load_file = PythonOperator(
-        task_id='load_file',
-        python_callable=transcribe_file,
-        do_xcom_push=True,
-        provide_context=True
-    )
-    
-    scored_result = PythonOperator(
-        task_id='scored_result',
-        python_callable=score_data,
-        do_xcom_push=True,
-        provide_context=True
-    )
     
     database_upload_eye = PythonOperator(
         task_id='database_upload_eye',
