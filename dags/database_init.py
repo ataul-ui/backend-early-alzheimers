@@ -1,20 +1,18 @@
 from datetime import datetime, timedelta
-import os
-import json
 import psycopg2
-from dotenv import load_dotenv
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
-# Define database credentials
-host = host
-port = port
-dbname = dbname
-user = user
-password = password
+# define database credentials
+host = 'your_db_host'
+port = 'your_db_port'
+dbname = 'your_db_name'
+user = 'your_db_username'
+password = 'your_db_password'
 
-def create_regular_schema():
-    # Create a connection to the database
+# define the tasks for creating the star schema
+def create_star_schema():
+    # create a connection to the database
     conn = psycopg2.connect(
         host=host,
         port=port,
@@ -22,43 +20,43 @@ def create_regular_schema():
         user=user,
         password=password
     )
-    
-    # Get contents of json file
-    file_path = os.path.join(os.getcwd(), "dags", "data", "create_database.json")
-    with open(file_path, "r") as json_file:
-        json_data = json.load(json_file)
-    
-    # Create a cursor object to interact with the database
+    # create a cursor object to interact with the database
     cur = conn.cursor()
-    
-    # Create the fact table
+    # create the dimension tables
     cur.execute("""
-        DROP TABLE IF EXISTS user_info;
-                
+        CREATE TABLE eye_data (
+            reference_eye SERIAL PRIMARY KEY,
+            date DATE,
+            biomarker INT
+        );
+        CREATE TABLE speech_data (
+            reference_speech SERIAL PRIMARY KEY,
+            date DATE,
+            score INT
+        );
+        
+        CREATE TABLE heart_data (
+            reference_heart SERIAL PRIMARY KEY,
+            date DATE,
+            hrv INT
+        );
+    """)
+    # create the fact table
+    cur.execute("""
         CREATE TABLE user_info (
-            username VARCHAR(10),
+            username SERIAL PRIMARY KEY,
             password VARCHAR(10),
             age INT,
             sex VARCHAR(10),
-            biomarker INT,
-            score INT,
-            hrv INT,
             country VARCHAR(50)
         );
     """)
-    
-    # Add the json data to the fact table
-    cur.execute(
-        "INSERT INTO user_info (username, password, age, sex, country) VALUES (%s, %s, %s, %s, %s)",
-        (json_data["username"], json_data["password"], json_data["age"], json_data["sex"], json_data["country"])
-    )
-    
-    # Commit the changes to the database and close the connection
+    # commit the changes to the database and close the connection
     conn.commit()
     cur.close()
     conn.close()
 
-# Define the DAG
+# define the DAG
 default_args = {
     'owner': 'your_name',
     'depends_on_past': False,
@@ -68,22 +66,20 @@ default_args = {
 }
 
 dag = DAG(
-    'create_regular_schema',
+    'create_star_schema',
     default_args=default_args,
     description='Create a star schema in PostgreSQL',
     schedule_interval=None
 )
 
-# Define the operator that will run the task
-create_regular_schema_task = PythonOperator(
-    task_id='create_regular_schema',
-    python_callable=create_regular_schema,
+# define the operator that will run the task
+create_star_schema_task = PythonOperator(
+    task_id='create_star_schema',
+    python_callable=create_star_schema,
     dag=dag
 )
 
-# Set the order of the tasks in the DAG
-create_regular_schema_task
-
-
+# set the order of the tasks in the DAG
+create_star_schema_task
 
 
