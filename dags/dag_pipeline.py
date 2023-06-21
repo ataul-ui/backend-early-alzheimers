@@ -9,12 +9,16 @@ from airflow.operators.python_operator import PythonOperator
 #LET THERE ONLY BE ONE DAG FI.E, AND IT SHOULD BE THIS ONE
 #COMBINE IT WITH SPEECH_DAY.py
 load_dotenv()
-DB = os.getenv("dbname")
 
 # Define database credentials
+something_1 = os.getenv("host")
+something_2 = os.getenv("user")
+print(something_1)
+print(something_2)
+
 host = 'host.docker.internal'
 port = '5432'
-dbname = DB
+dbname = 'airflow'
 user = 'airflow'
 password = 'airflow'
     
@@ -32,6 +36,10 @@ def upload_to_postgre_speech_data(**kwargs):
         user=user,
         password=password
     )
+    
+    print(something_1)
+    print(something_2)
+    
     cur = conn.cursor()
     cur.execute("INSERT INTO user_info (score) VALUES (%s)", (json_data_speech["score"],))
     
@@ -42,7 +50,7 @@ def upload_to_postgre_speech_data(**kwargs):
     context = kwargs
     context['ti'].xcom_push(key='speechData', value='speech data has been received')
     
-    return "uploaded speech data"
+    return something_1
 
 
 def upload_to_postgre_eye_data(**kwargs):
@@ -69,7 +77,7 @@ def upload_to_postgre_eye_data(**kwargs):
     context = kwargs
     context['ti'].xcom_push(key='eyeData', value='ocular data has been received')
     
-    return "will_upload"
+    return something_2
 
 def confirm_data_upload(**kwargs):
     ti = kwargs['ti']
