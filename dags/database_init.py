@@ -8,7 +8,7 @@ from airflow.operators.python_operator import PythonOperator
 # define database credentials
 host = 'host.docker.internal'
 port = '5432'
-dbname = 'alzhimers'
+dbname = 'airflow'
 user = 'airflow'
 password = 'airflow'
 
