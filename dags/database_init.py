@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 import psycopg2
+import os
+import json
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
@@ -20,37 +22,34 @@ def create_star_schema():
         user=user,
         password=password
     )
+    
+    # Get contents of json file
+    file_path = os.path.join(os.getcwd(), "dags", "data", "create_database.json")
+    with open(file_path, "r") as json_file:
+        json_data = json.load(json_file)
     # create a cursor object to interact with the database
     cur = conn.cursor()
-    # create the dimension tables
+    # Create the fact table
     cur.execute("""
-        CREATE TABLE eye_data (
-            reference_eye SERIAL PRIMARY KEY,
-            date DATE,
-            biomarker INT
-        );
-        CREATE TABLE speech_data (
-            reference_speech SERIAL PRIMARY KEY,
-            date DATE,
-            score INT
-        );
-        
-        CREATE TABLE heart_data (
-            reference_heart SERIAL PRIMARY KEY,
-            date DATE,
-            hrv INT
-        );
-    """)
-    # create the fact table
-    cur.execute("""
+        DROP TABLE IF EXISTS user_info;
+                
         CREATE TABLE user_info (
-            username SERIAL PRIMARY KEY,
+            username VARCHAR(10),
             password VARCHAR(10),
             age INT,
             sex VARCHAR(10),
+            biomarker INT,
+            score INT,
+            hrv INT,
             country VARCHAR(50)
         );
     """)
+    
+    # Add the json data to the fact table
+    cur.execute(
+        "INSERT INTO user_info (username, password, age, sex, country) VALUES (%s, %s, %s, %s, %s)",
+        (json_data["username"], json_data["password"], json_data["age"], json_data["sex"], json_data["country"])
+    )
     # commit the changes to the database and close the connection
     conn.commit()
     cur.close()
