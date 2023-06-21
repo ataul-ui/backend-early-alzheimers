@@ -1,0 +1,37 @@
+name: Airflow Trigger
+
+on:
+  workflow_run:
+    workflows: ["Your Airflow DAG Workflow Name"]
+    types:
+      - completed
+
+jobs:
+  upload-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          
+      - name: Install DVC
+        run: |
+          pip install dvc
+          dvc --version
+          
+      - name: Configure Azure Blob Storage Credentials
+        run: |
+          echo "AZURE_STORAGE_ACCOUNT_NAME=<your-storage-account-name>" >> $GITHUB_ENV
+          echo "AZURE_STORAGE_ACCOUNT_KEY=<your-storage-account-key>" >> $GITHUB_ENV
+          
+      - name: Upload Data to Azure Blob Storage
+        run: |
+          dvc remote modify --local my_remote azure_blob
+          dvc remote modify --local my_remote url "azure://\$AZURE_STORAGE_ACCOUNT_NAME.blob.core.windows.net/<your-container-name>"
+          dvc remote modify --local my_remote connection_string "\$AZURE_STORAGE_ACCOUNT_NAME:\$AZURE_STORAGE_ACCOUNT_KEY"
+          dvc push -r my_remote
