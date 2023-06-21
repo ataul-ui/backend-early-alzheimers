@@ -6,11 +6,11 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 # define database credentials
-host = 'your_db_host'
-port = 'your_db_port'
-dbname = 'your_db_name'
-user = 'your_db_username'
-password = 'your_db_password'
+host = 'host.docker.internal'
+port = '5432'
+dbname = 'alzhimers'
+user = 'airflow'
+password = 'airflow'
 
 # define the tasks for creating the star schema
 def create_star_schema():
@@ -72,13 +72,13 @@ dag = DAG(
 )
 
 # define the operator that will run the task
-create_star_schema_task = PythonOperator(
+create_regular_schema_task = PythonOperator(
     task_id='create_star_schema',
     python_callable=create_star_schema,
     dag=dag
 )
 
 # set the order of the tasks in the DAG
-create_star_schema_task
+create_regular_schema_task
 
 
