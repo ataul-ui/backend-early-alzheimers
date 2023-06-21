@@ -77,6 +77,9 @@ def confirm_data_upload(**kwargs):
     
     print(recieved_speech)
     print(recieved_eye)
+    
+def dvc_github_actions_execute():
+    return "something"
 
 
 with DAG("eye_pipeline", start_date=datetime(2021,1,1),
@@ -103,4 +106,9 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
         provide_context=True
     )
     
-    [database_upload_eye, database_upload_speech] >> confirmation_task
+    dvc_github_actions = PythonOperator(
+        task_id='dvc_github_actions',
+        python_callable=confirm_data_upload
+    )
+    
+    [database_upload_eye, database_upload_speech] >> confirmation_task >> dvc_github_actions
