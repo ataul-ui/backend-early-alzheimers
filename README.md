@@ -5,6 +5,19 @@ blah baassl
 uhh what?
 I COULD DO GITHUB ACTIONS ON THIS PROJECT!!!! I FORGOT WHAT WAY IT WAS, I'LL LOOKS THROUGH MY NOTES AND UPDATE THIS
 
+
+make sure you have docker installed
+
+First clone this repository
+make a copy of .env.example file and name it .env
+then add in your credentials
+
+run docker compose up and you should be good
+airflow trigger github actions in order to upload to azure
+using shell commands
+
+
+
 I think I can use github actions to upload the data to azure, use dvc for it maybe
 Right, I think github actions can be used to do dvc which then uploads data to azure blob storage, that actually sounds pretty good
 

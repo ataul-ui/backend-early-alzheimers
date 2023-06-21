@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
 
+#LET THERE ONLY BE ONE DAG FI.E, AND IT SHOULD BE THIS ONE
+#COMBINE IT WITH SPEECH_DAY.py
+
 # Define database credentials
 host = 'host.docker.internal'
 port = '5432'
