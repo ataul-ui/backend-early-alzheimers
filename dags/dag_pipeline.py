@@ -11,9 +11,16 @@ from airflow.operators.python_operator import PythonOperator
 load_dotenv()
 
 # Define database credentials
-something_1 = os.getenv("host")
-something_2 = os.getenv("user")
+cwd = "/Users/ataulhaqakbar/Desktop/new_reposo"
+print(cwd)
+load_dotenv(dotenv_path=os.path.join(cwd, '.env'))
+water = os.path.join(cwd, '.env')
+
+
+something_1 = os.getenv('host')
+something_2 = os.getenv('user')
 print(something_1)
+print("this is the test")
 print(something_2)
 
 host = 'host.docker.internal'
@@ -50,7 +57,7 @@ def upload_to_postgre_speech_data(**kwargs):
     context = kwargs
     context['ti'].xcom_push(key='speechData', value='speech data has been received')
     
-    return something_1
+    return cwd
 
 
 def upload_to_postgre_eye_data(**kwargs):
