@@ -13,8 +13,8 @@ load_dotenv()
 # Define database credentials
 cwd = "/Users/ataulhaqakbar/Desktop/new_reposo"
 print(cwd)
-load_dotenv(dotenv_path=os.path.join(cwd, '.env'))
-water = os.path.join(cwd, '.env')
+#load_dotenv(dotenv_path=os.path.join(cwd, '.env'))
+#water = os.path.join(cwd, '.env')
 
 
 something_1 = os.getenv('host')
@@ -23,11 +23,11 @@ print(something_1)
 print("this is the test")
 print(something_2)
 
-host = 'host.docker.internal'
-port = '5432'
-dbname = 'airflow'
-user = 'airflow'
-password = 'airflow'
+host = os.getenv('host')
+port = os.getenv('port')
+dbname = os.getenv('dbname')
+user = os.getenv('user')
+password = os.getenv('password')
     
 def upload_to_postgre_speech_data(**kwargs):
     cwd = os.getcwd()
