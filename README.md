@@ -3,8 +3,8 @@
 testing something again
 blah baassl
 uhh what?
-I COULD DO GITHUB ACTIONS ON THIS PROJECT!!!! I FORGOT WHAT WAY IT WAS, I'LL LOOKS THROUGH MY NOTES AND UPDATE THIS
-^^^ no use github actions on mlflow project, use dvc directly on dockerfile
+THIS IS A DATAOPS PROJECT, I WILL EXPLAIN MORE IN THE MEDIUM ARTICLE
+^^^ use dvc directly on dockerfile
 and airflow task, follow this link for help: https://medium.com/analytics-vidhya/docker-volumes-with-dvc-for-versioning-data-and-models-for-ml-projects-4885935db3ec 
 
 make sure you have docker installed

@@ -16,6 +16,13 @@ RUN pip install requests
 RUN pip install python-dotenv
 RUN pip install dvc[all]
 RUN pip install dvc[azure]
-RUN dvc --version
+ENV PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin/dvc:${PATH}"
+
+#RUN dvc --version
+
+
+# dvc location: /Library/Frameworks/Python.framework/Versions/3.10/bin/dvc
+#RUN which dvc
+#RUN dvc --version
 #RUN pip install --upgrade pip
 #RUN pip install psql[all]

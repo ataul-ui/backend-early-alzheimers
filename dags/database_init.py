@@ -57,6 +57,14 @@ def create_star_schema():
     )
     
     cur.execute(
+        ''' SELECT * FROM user_info; '''
+    )
+    
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+    
+    cur.execute(
         "COPY user_info TO '/tmp/data.csv' CSV HEADER;"
     )
     
@@ -92,7 +100,7 @@ create_regular_schema_task = PythonOperator(
 
 run_this = BashOperator(
     task_id="run_after_loop",
-    bash_command='''dvc add /tmp/data.csv''',
+    bash_command='''pwd''',
     dag=dag
 )
 
