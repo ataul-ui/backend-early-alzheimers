@@ -4,6 +4,7 @@ import os
 import json
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash_operator import BashOperator
 
 # define database credentials
 host = 'host.docker.internal'
@@ -78,7 +79,13 @@ create_regular_schema_task = PythonOperator(
     dag=dag
 )
 
+run_this = BashOperator(
+    task_id="run_after_loop",
+    bash_command="echo 1",
+    dag=dag
+)
+
 # set the order of the tasks in the DAG
-create_regular_schema_task
+create_regular_schema_task >> run_this
 
 
