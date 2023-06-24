@@ -34,6 +34,7 @@ services:
         max-file: "3"
     volumes:
       - ./dags:/usr/local/airflow/dags
+      - ./cool:/usr/local/airflow/cool_stuff
       #- ./:/usr/local/airflow/.env:ro
       # - ./plugins:/usr/local/airflow/plugins
     ports:
@@ -49,3 +50,4 @@ services:
 
 volumes:
   postgres_data:
+  #app-vol:

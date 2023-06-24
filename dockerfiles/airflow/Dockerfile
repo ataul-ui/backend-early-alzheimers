@@ -18,7 +18,7 @@ RUN pip install dvc[all]
 RUN pip install dvc[azure]
 #ENV PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin/dvc:${PATH}"
 RUN pip freeze
-RUN dvc --version
+#RUN dvc --version
 
 
 # dvc location: /Library/Frameworks/Python.framework/Versions/3.10/bin/dvc

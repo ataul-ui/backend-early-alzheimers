@@ -64,7 +64,11 @@ def create_star_schema():
     for row in rows:
         print(row)
     
-    
+    cur.execute(
+        '''
+        COPY user_info TO '/usr/local/airflow/cool_stuff/data.csv' CSV HEADER;
+        '''
+    )
     # commit the changes to the database and close the connection
     conn.commit()
     cur.close()
