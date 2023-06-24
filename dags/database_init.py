@@ -13,6 +13,10 @@ dbname = 'airflow'
 user = 'airflow'
 password = 'airflow'
 
+psql_command = """
+psql -h $host -p $port -U $user -d $dbname -c "COPY user_info TO '/tmp/data.csv' CSV HEADER;"
+"""
+
 # define the tasks for creating the star schema
 def create_star_schema():
     # create a connection to the database
@@ -51,10 +55,17 @@ def create_star_schema():
         "INSERT INTO user_info (username, password, age, sex, country) VALUES (%s, %s, %s, %s, %s)",
         (json_data["username"], json_data["password"], json_data["age"], json_data["sex"], json_data["country"])
     )
+    
+    cur.execute(
+        "COPY user_info TO '/tmp/data.csv' CSV HEADER;"
+    )
+    
     # commit the changes to the database and close the connection
     conn.commit()
     cur.close()
     conn.close()
+    
+    
 
 # define the DAG
 default_args = {
@@ -81,9 +92,7 @@ create_regular_schema_task = PythonOperator(
 
 run_this = BashOperator(
     task_id="run_after_loop",
-    bash_command='''echo $CONTAINER_NAME
-    echo $AZURE_STORAGE_ACCESS_KEY
-    ''',
+    bash_command='''dvc add /tmp/data.csv''',
     dag=dag
 )
 
