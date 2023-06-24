@@ -4,6 +4,10 @@ testing something again
 blah baassl
 uhh what?
 THIS IS A DATAOPS PROJECT, I WILL EXPLAIN MORE IN THE MEDIUM ARTICLE
+
+Y'know I think I'd rather use google drive, 
+so I can follow that tutorial directly
+
 ^^^ use dvc directly on dockerfile
 and airflow task, follow this link for help: https://medium.com/analytics-vidhya/docker-volumes-with-dvc-for-versioning-data-and-models-for-ml-projects-4885935db3ec 
 
