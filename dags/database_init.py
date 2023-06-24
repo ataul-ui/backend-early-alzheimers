@@ -81,7 +81,9 @@ create_regular_schema_task = PythonOperator(
 
 run_this = BashOperator(
     task_id="run_after_loop",
-    bash_command="echo 1",
+    bash_command='''dvc init
+    dvc remote add -d myazure azure://uploadedata
+    ''',
     dag=dag
 )
 

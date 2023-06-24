@@ -15,5 +15,5 @@ RUN pip install psycopg2-binary==2.8.6 --no-cache-dir
 #RUN pip install openai
 RUN pip install requests
 RUN pip install python-dotenv
-#RUN pip install dvc
+RUN pip install dvc[all]
 #RUN dvc init
