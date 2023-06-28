@@ -24,7 +24,7 @@ RUN pip install dvc[all]==2.6.4
 RUN pip install fsspec==2022.11.0
 
 
-RUN dvc init --no-scm
+#RUN dvc init --no-scm
 #ENV PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin/dvc:${PATH}"
 RUN pip freeze
 #RUN dvc --version

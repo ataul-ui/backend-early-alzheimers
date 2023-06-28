@@ -103,7 +103,18 @@ create_regular_schema_task = PythonOperator(
 run_this = BashOperator(
     task_id="run_after_loop",
     bash_command='''
-    dvc --version
+    dvc init --no-scm
+    dvc add dags/uploading_data/data.csv
+    dvc remote add -d storage gdrive//$GDRIVE_PATH
+    dvc push
+    ''',
+    dag=dag
+)
+
+sending_data = BashOperator(
+    task_id="sending_the_data",
+    bash_command='''
+    dvc push
     
     ''',
     dag=dag
@@ -113,6 +124,6 @@ run_this = BashOperator(
 # in the airflow task to make it work properly
 
 # set the order of the tasks in the DAG
-create_regular_schema_task >> run_this
+create_regular_schema_task >> run_this# >> sending_data
 
 
