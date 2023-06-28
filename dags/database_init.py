@@ -64,11 +64,6 @@ def create_star_schema():
     for row in rows:
         print(row)
     
-    cur.execute(
-        '''
-        COPY user_info TO '/usr/local/airflow/cool_stuff/data.csv' CSV HEADER;
-        '''
-    )
     # commit the changes to the database and close the connection
     conn.commit()
     cur.close()
@@ -101,11 +96,14 @@ create_regular_schema_task = PythonOperator(
 
 run_this = BashOperator(
     task_id="run_after_loop",
-    bash_command='''git init
-    dvc init
+    bash_command='''docker ps
+    
     ''',
     dag=dag
 )
+
+# hmmm maybe I need to put docker exec -it 
+# in the airflow task to make it work properly
 
 # set the order of the tasks in the DAG
 create_regular_schema_task >> run_this
