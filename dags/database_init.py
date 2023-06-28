@@ -2,20 +2,22 @@ from datetime import datetime, timedelta
 import psycopg2
 import os
 import json
+from dotenv import load_dotenv
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 
-# define database credentials
-host = 'host.docker.internal'
-port = '5432'
-dbname = 'airflow'
-user = 'airflow'
-password = 'airflow'
 
-psql_command = """
-psql -h $host -p $port -U $user -d $dbname -c "COPY user_info TO '/tmp/data.csv' CSV HEADER;"
-"""
+load_dotenv()
+
+# define database credentials
+host = os.getenv('host')
+port = os.getenv('port')
+dbname = os.getenv('dbname')
+user = os.getenv('user')
+password = os.getenv('password')
+
+
 
 # define the tasks for creating the star schema
 def create_star_schema():
@@ -111,19 +113,9 @@ run_this = BashOperator(
     dag=dag
 )
 
-sending_data = BashOperator(
-    task_id="sending_the_data",
-    bash_command='''
-    dvc push
-    
-    ''',
-    dag=dag
-)
 
-# hmmm maybe I need to put docker exec -it 
-# in the airflow task to make it work properly
 
 # set the order of the tasks in the DAG
-create_regular_schema_task >> run_this# >> sending_data
+create_regular_schema_task >> run_this
 
 

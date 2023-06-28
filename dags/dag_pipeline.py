@@ -18,12 +18,6 @@ print(cwd)
 #water = os.path.join(cwd, '.env')
 
 
-something_1 = os.getenv('host')
-something_2 = os.getenv('user')
-print(something_1)
-print("this is the test")
-print(something_2)
-
 host = os.getenv('host')
 port = os.getenv('port')
 dbname = os.getenv('dbname')
@@ -45,8 +39,6 @@ def upload_to_postgre_speech_data(**kwargs):
         password=password
     )
     
-    print(something_1)
-    print(something_2)
     
     cur = conn.cursor()
     cur.execute("INSERT INTO user_info (score) VALUES (%s)", (json_data_speech["score"],))
@@ -85,7 +77,7 @@ def upload_to_postgre_eye_data(**kwargs):
     context = kwargs
     context['ti'].xcom_push(key='eyeData', value='ocular data has been received')
     
-    return something_2
+    return None
 
 def confirm_data_upload(**kwargs):
     ti = kwargs['ti']
@@ -96,8 +88,6 @@ def confirm_data_upload(**kwargs):
     print(recieved_speech)
     print(recieved_eye)
     
-def dvc_github_actions_execute():
-    return "something"
 
 
 with DAG("eye_pipeline", start_date=datetime(2021,1,1),
