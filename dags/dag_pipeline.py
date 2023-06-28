@@ -5,6 +5,7 @@ import psycopg2
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash_operator import BashOperator
 
 #LET THERE ONLY BE ONE DAG FI.E, AND IT SHOULD BE THIS ONE
 #COMBINE IT WITH SPEECH_DAY.py
@@ -123,9 +124,11 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
         provide_context=True
     )
     
-    dvc_github_actions = PythonOperator(
-        task_id='dvc_github_actions',
-        python_callable=confirm_data_upload
-    )
+    dvc_upload = BashOperator(
+    task_id="sending_the_data",
+    bash_command='''
+    dvc push
     
-    [database_upload_eye, database_upload_speech] >> confirmation_task >> dvc_github_actions
+    ''',
+    )
+    [database_upload_eye, database_upload_speech] >> confirmation_task >> dvc_upload
