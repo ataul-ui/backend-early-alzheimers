@@ -96,7 +96,8 @@ create_regular_schema_task = PythonOperator(
 
 run_this = BashOperator(
     task_id="run_after_loop",
-    bash_command='''docker ps
+    bash_command='''
+    dvc --version
     
     ''',
     dag=dag
