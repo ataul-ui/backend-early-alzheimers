@@ -63,6 +63,12 @@ def create_star_schema():
     rows = cur.fetchall()
     for row in rows:
         print(row)
+        
+    file_path_dvc = os.path.join(os.getcwd(), "dags", "uploading_data", "data.csv")
+        
+    copy_query = "COPY user_info TO STDOUT WITH CSV HEADER"
+    with open(file_path_dvc, 'w') as f:
+        cur.copy_expert(copy_query, f)
     
     # commit the changes to the database and close the connection
     conn.commit()
