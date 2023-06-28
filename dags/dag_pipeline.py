@@ -11,12 +11,6 @@ from airflow.operators.bash_operator import BashOperator
 #COMBINE IT WITH SPEECH_DAY.py
 load_dotenv()
 
-# Define database credentials
-cwd = "/Users/ataulhaqakbar/Desktop/new_reposo"
-print(cwd)
-#load_dotenv(dotenv_path=os.path.join(cwd, '.env'))
-#water = os.path.join(cwd, '.env')
-
 
 host = os.getenv('host')
 port = os.getenv('port')
