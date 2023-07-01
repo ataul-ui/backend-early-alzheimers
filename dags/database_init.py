@@ -7,21 +7,21 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 
-
 load_dotenv()
 
-# define database credentials
+# Define database credentials
 host = os.getenv('host')
 port = os.getenv('port')
 dbname = os.getenv('dbname')
 user = os.getenv('user')
 password = os.getenv('password')
 
-
-
-# define the tasks for creating the star schema
+# Define the tasks for creating the star schema
 def create_star_schema():
-    # create a connection to the database
+    """
+    Function to create a star schema in PostgreSQL.
+    """
+    # Create a connection to the database
     conn = psycopg2.connect(
         host=host,
         port=port,
@@ -34,8 +34,10 @@ def create_star_schema():
     file_path = os.path.join(os.getcwd(), "dags", "data", "create_database.json")
     with open(file_path, "r") as json_file:
         json_data = json.load(json_file)
-    # create a cursor object to interact with the database
+    
+    # Create a cursor object to interact with the database
     cur = conn.cursor()
+    
     # Create the fact table
     cur.execute("""
         DROP TABLE IF EXISTS user_info;
@@ -58,9 +60,7 @@ def create_star_schema():
         (json_data["username"], json_data["password"], json_data["age"], json_data["sex"], json_data["country"])
     )
     
-    cur.execute(
-        ''' SELECT * FROM user_info; '''
-    )
+    cur.execute('''SELECT * FROM user_info;''')
     
     rows = cur.fetchall()
     for row in rows:
@@ -72,14 +72,12 @@ def create_star_schema():
     with open(file_path_dvc, 'w') as f:
         cur.copy_expert(copy_query, f)
     
-    # commit the changes to the database and close the connection
+    # Commit the changes to the database and close the connection
     conn.commit()
     cur.close()
     conn.close()
-    
-    
 
-# define the DAG
+# Define the DAG
 default_args = {
     'owner': 'your_name',
     'depends_on_past': False,
@@ -95,7 +93,7 @@ dag = DAG(
     schedule_interval=None
 )
 
-# define the operator that will run the task
+# Define the operator that will run the task
 create_regular_schema_task = PythonOperator(
     task_id='create_star_schema',
     python_callable=create_star_schema,
@@ -113,9 +111,5 @@ run_this = BashOperator(
     dag=dag
 )
 
-
-
-# set the order of the tasks in the DAG
+# Set the order of the tasks in the DAG
 create_regular_schema_task >> run_this
-
-

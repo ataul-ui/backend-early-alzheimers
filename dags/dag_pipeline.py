@@ -7,18 +7,19 @@ from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 
-#LET THERE ONLY BE ONE DAG FI.E, AND IT SHOULD BE THIS ONE
-#COMBINE IT WITH SPEECH_DAY.py
 load_dotenv()
 
-
+# Retrieve database credentials from environment variables
 host = os.getenv('host')
 port = os.getenv('port')
 dbname = os.getenv('dbname')
 user = os.getenv('user')
 password = os.getenv('password')
-    
+
 def upload_to_postgre_speech_data(**kwargs):
+    """
+    Task to upload speech data to PostgreSQL.
+    """
     cwd = os.getcwd()
     file_path_speech = os.path.join(cwd, "dags", "data", "speech_data.json")
     
@@ -32,7 +33,6 @@ def upload_to_postgre_speech_data(**kwargs):
         user=user,
         password=password
     )
-    
     
     cur = conn.cursor()
     cur.execute("INSERT INTO user_info (score) VALUES (%s)", (json_data_speech["score"],))
@@ -48,6 +48,9 @@ def upload_to_postgre_speech_data(**kwargs):
 
 
 def upload_to_postgre_eye_data(**kwargs):
+    """
+    Task to upload eye data to PostgreSQL.
+    """
     cwd = os.getcwd()
     file_path_eye = os.path.join(cwd, "dags", "data", "ocular.json")
     
@@ -74,19 +77,21 @@ def upload_to_postgre_eye_data(**kwargs):
     return None
 
 def confirm_data_upload(**kwargs):
+    """
+    Task to confirm the successful upload of data.
+    """
     ti = kwargs['ti']
-    recieved_speech = ti.xcom_pull(key='speechData')
-    recieved_eye = ti.xcom_pull(key='eyeData')
+    received_speech = ti.xcom_pull(key='speechData')
+    received_eye = ti.xcom_pull(key='eyeData')
     
-    
-    print(recieved_speech)
-    print(recieved_eye)
-    
+    print(received_speech)
+    print(received_eye)
 
-
+# Define the DAG
 with DAG("eye_pipeline", start_date=datetime(2021,1,1),
          schedule_interval='@daily', catchup=False) as dag:
     
+    # Task to upload eye data
     database_upload_eye = PythonOperator(
         task_id='database_upload_eye',
         python_callable=upload_to_postgre_eye_data,
@@ -94,6 +99,7 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
         provide_context=True
     )
     
+    # Task to upload speech data
     database_upload_speech = PythonOperator(
         task_id='database_upload_speech',
         python_callable=upload_to_postgre_speech_data,
@@ -101,6 +107,7 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
         provide_context=True
     )
     
+    # Task to confirm data upload
     confirmation_task = PythonOperator(
         task_id='confirmation_task',
         python_callable=confirm_data_upload,
@@ -108,11 +115,11 @@ with DAG("eye_pipeline", start_date=datetime(2021,1,1),
         provide_context=True
     )
     
+    # Task to perform DVC upload
     dvc_upload = BashOperator(
-    task_id="sending_the_data",
-    bash_command='''
-    dvc push
-    
-    ''',
+        task_id="sending_the_data",
+        bash_command='dvc push',
     )
+    
+    # Define task dependencies
     [database_upload_eye, database_upload_speech] >> confirmation_task >> dvc_upload
