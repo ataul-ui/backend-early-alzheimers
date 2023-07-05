@@ -5,9 +5,9 @@ services:
   postgres:
     image: postgres:9.6
     environment:
-      - POSTGRES_USER=airflow
-      - POSTGRES_PASSWORD=airflow
-      - POSTGRES_DB=airflow
+      - POSTGRES_USER=$user
+      - POSTGRES_PASSWORD=$password
+      - POSTGRES_DB=$dbname
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
