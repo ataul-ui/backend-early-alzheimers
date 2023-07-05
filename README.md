@@ -7,19 +7,26 @@ Make sure you have docker installed. Follow this link to download it if you don'
 
 
 
-### Credentials
+## Credentials
 make a copy of .env.example file and name it .env
 then add in your credentials
 
-### Docker instructions
-To build and start the container
-``` docker-compose up --build ```
 
-To stop container
-``` docker-compose down ```
+## Docker instructions
+- To build and start the container
 
-### Airflow UI access
-Type ``` localhost:8080 ``` on any browser to access the webserver UI
-show screenshot of that
+``` bash
+docker-compose up --build 
+```
+
+- To stop container
+
+``` bash
+docker-compose down 
+```
+
+## Airflow UI access
+Type ``` localhost:8080 ``` on any browser to access the airflow webserver UI
+
 
 
