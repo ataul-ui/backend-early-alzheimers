@@ -2,7 +2,7 @@
 
 This repository contains the backend code for an early Alzheimer's detection system utilizing the DataOps approach. A detailed blog of this project is available [here](https://medium.com/@ataul.akbar/cost-effective-data-collection-for-alzheimers-disease-prevention-dataops-approach-7f9384f85d5).
 
-### Requirements
+## Requirements
 Make sure you have docker installed. Follow this link to download it if you don't have it installed: https://www.docker.com/products/docker-desktop/
 
 
