@@ -9,6 +9,13 @@ Make sure you have docker installed. Follow this link to download it if you don'
 
 ## Credentials
 Make a copy of .env.example file and name it .env, then add in your credentials.
+``` bash
+host = 'host.docker.internal'
+port = '5432'
+dbname = 'airflow'
+user = 'airflow'
+password = 'airflow'
+```
 
 
 ## Docker instructions
