@@ -1,6 +1,6 @@
 # backend-early-alzheimers
 
-This repository contains the backend code for an early Alzheimer's detection system utilizing the distributed data pipelines. A detailed article of this project is available [here](https://medium.com/@ataul.akbar/cost-effective-data-collection-for-alzheimers-disease-prevention-distributed-data-pipeline-c5896424412b).
+This repository contains the backend code for an early Alzheimer's detection data collection system utilizing distributed data pipelines. A detailed article of this project is available [here](https://medium.com/@ataul.akbar/cost-effective-data-collection-for-alzheimers-disease-prevention-distributed-data-pipeline-c5896424412b).
 
 ## Requirements
 Make sure you have docker installed. Follow this link to download it if you don't have it installed: https://www.docker.com/products/docker-desktop/.
