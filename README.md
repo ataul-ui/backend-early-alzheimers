@@ -4,6 +4,7 @@ This repository contains the backend code for an early Alzheimer's detection dat
 
 
 ## Dataflow diagram
+![Alt text](./images/uml-diagram.png)
 
 
 ## Requirements
