@@ -5,7 +5,6 @@ This repository contains the backend code for an early Alzheimer's detection dat
 
 ## Dataflow diagram
 ![Alt text](./images/uml-diagram.png)
-Hmmm instead of azure database maybe I should do [heroku postgres](https://www.heroku.com/pricing#containers)
 
 ## Requirements
 Make sure you have docker installed. Follow this link to download it if you don't have it installed: https://www.docker.com/products/docker-desktop/.
