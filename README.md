@@ -4,7 +4,7 @@ This repository contains the backend code for an early Alzheimer's detection dat
 
 
 ## Dataflow diagram
-![Alt text](./images/uml-diagram.png)
+![Alt text](./images/UPDATED-UML-DIAGRAM.png)
 
 ## Requirements
 Make sure you have docker installed. Follow this link to download it if you don't have it installed: https://www.docker.com/products/docker-desktop/.
